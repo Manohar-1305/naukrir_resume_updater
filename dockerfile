@@ -28,7 +28,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy script
-COPY script.py .
+COPY s3_bucket.py .
 
 # Run script
-CMD ["python", "script.py"]
+CMD ["python", "s3_bucket.py"]
