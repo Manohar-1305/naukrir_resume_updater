@@ -1,0 +1,23 @@
+pip install webdriver-manager
+pip install selenium
+C:\Users\Manohar Shetty\AppData\Local\Programs\Python\Python310\python.exe
+C:\Users\Manohar Shetty\Desktop\update_resume\upload_resume.py
+
+
+✅ Schedule Your Script in Task Scheduler
+Use the Python path you found and follow these steps:
+
+Open Task Scheduler (Win + R → Type taskschd.msc → Press Enter).
+Click "Create Basic Task" → Name it Naukri Resume Upload.
+Select "Daily" → Set time to 12:00 PM → Click Next.
+Choose "Start a Program" → Click Next.
+In Program/Script, enter:
+C:\Users\Manohar\AppData\Local\Programs\Python\Python310\python.exe
+
+In Add Arguments, enter:
+"C:\Path\To\upload_resume.py"
+
+NAUKRI_EMAIL = "manohar.shetty507@gmail.com"
+NAUKRI_PASSWORD = "Manohar@1305"
+BUCKET_NAME = "profile1305"
+S3_OBJECT_KEY = "Manohar_Pinnamshetty.pdf"
