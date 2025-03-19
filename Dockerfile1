@@ -1,0 +1,45 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    wget unzip curl python3 python3-pip \
+    libglib2.0-0 libnss3 libgconf-2-4 libx11-xcb1 libxcomposite1 \
+    libxcursor1 libxdamage1 libxfixes3 libxi6 libxrandr2 libxrender1 \
+    libfontconfig1 libasound2 xvfb fonts-liberation libatk-bridge2.0-0 \
+    libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libgbm1 libgtk-3-0 \
+    libpango-1.0-0 libvulkan1 libxkbcommon0 xdg-utils && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Chrome
+RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    apt-get install -y ./google-chrome-stable_current_amd64.deb && \
+    rm google-chrome-stable_current_amd64.deb && \
+    ln -s /usr/bin/google-chrome-stable /usr/bin/google-chrome
+
+# Install ChromeDriver
+RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1) && \
+    DRIVER_VERSION=$(curl -sS "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}") && \
+    wget -q "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip" && \
+    unzip chromedriver_linux64.zip && \
+    mv chromedriver /usr/local/bin/ && \
+    chmod +x /usr/local/bin/chromedriver && \
+    rm chromedriver_linux64.zip
+
+# Set environment variables
+ENV PATH="/usr/local/bin:${PATH}"
+ENV DISPLAY=:99
+
+# Set work directory
+WORKDIR /app
+
+# Copy application files
+COPY . .
+
+# Install Python dependencies
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Start Xvfb for headless Chrome
+CMD ["bash", "-c", "Xvfb :99 -screen 0 1024x768x16 & python3 s3_bucket.py"]
+
