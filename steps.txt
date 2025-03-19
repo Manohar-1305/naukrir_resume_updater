@@ -21,4 +21,6 @@ In Add Arguments, enter:
 docker build -t naukri-resume-updater .
 docker run -d --name naukri-resume-updater naukri-resume-updater
 docker run -it --rm naukri-resume-updater /bin/bash
+docker run --rm -e AWS_REGION=ap-south-1 -e BUCKET_NAME=profile1305 naukri-resume-updater
+
 
