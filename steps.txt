@@ -19,4 +19,6 @@ In Add Arguments, enter:
 
 
 docker build -t naukri-resume-updater .
+docker run -d --name naukri-resume-updater naukri-resume-updater
 docker run -it --rm naukri-resume-updater /bin/bash
+
