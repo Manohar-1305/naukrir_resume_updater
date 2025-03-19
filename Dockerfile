@@ -1,5 +1,5 @@
-# Use Ubuntu as base image
-FROM ubuntu:latest
+# Use Ubuntu 22.04 (Jammy) as base image
+FROM ubuntu:22.04
 
 # Set environment variables to avoid interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install -y \
     libxi6 \
     libxrandr2 \
     libxrender1 \
-    libxrandr2 \
     libfontconfig1 \
     libasound2 \
     xvfb
@@ -52,3 +51,4 @@ WORKDIR /app
 
 # Run the script
 CMD ["python3", "s3_bucket.py"]
+
