@@ -28,9 +28,10 @@ PASSWORD = "Manohar@1305"
 
 
 def download_resume_from_s3():
-    """Download the latest resume from S3."""
-    logger.info("Connecting to AWS S3...")
-    s3 = boto3.client("s3")
+    """Download the latest resume from S3 using IAM Role."""
+    logger.info("Connecting to AWS S3 using IAM role...")
+    session = boto3.Session()  # Uses IAM role in AWS
+    s3 = session.client("s3")
 
     try:
         s3.download_file(BUCKET_NAME, S3_OBJECT_KEY, DOWNLOAD_PATH)
